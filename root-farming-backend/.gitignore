@@ -1,0 +1,10 @@
+node_modules/
+.env
+dist/
+.vscode/
+.vercel
+package-lock.json
+
+
+serviceAccountKey.json
+.DS_Store
