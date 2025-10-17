@@ -88,7 +88,11 @@ app.use("/wishlist", wishlistRoutes);
 const server = http.createServer(app);
 const io = new Server(server, {
    cors: {
-      origin: ["http://localhost:5173"],
+      origin: [
+         "http://localhost:5173",
+         "http://localhost:5174",
+         "https://elegant-buttercream-cd3400.netlify.app",
+      ],
       credentials: true,
       methods: ["GET", "POST"],
    },
