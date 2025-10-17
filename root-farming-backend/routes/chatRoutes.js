@@ -1,3 +1,4 @@
+
 import express from "express";
 import { getCollection } from "../config/db.js";
 import { ObjectId } from "mongodb";
@@ -40,3 +41,4 @@ router.get(
 );
 
 export default router;
+

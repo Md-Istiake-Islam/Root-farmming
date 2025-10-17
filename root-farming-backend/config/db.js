@@ -8,7 +8,6 @@ if (!uri) {
    throw new Error("MONGO_URI is not defined in environment variables");
    process.exit(1);
 }
-
 const client = new MongoClient(uri, {
    serverApi: {
       version: ServerApiVersion.v1,
@@ -19,7 +18,6 @@ const client = new MongoClient(uri, {
 
 export const connectDB = async () => {
    try {
-      await client.connect();
       console.log("MongoDB client initialized.");
       return client.db("Root-Farming");
    } catch (error) {

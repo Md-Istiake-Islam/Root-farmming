@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+
+//import http module to create server
 import http from "http";
 import { Server } from "socket.io";
 
@@ -20,8 +22,19 @@ import dailyToDoRoutes from "./routes/dailyToDoRoutes.js";
 import resourceRoutes from "./routes/resourceRoutes.js";
 import starNewCropRoutes from "./routes/startNewCropRoutes.js";
 import managementGuideRoutes from "./routes/managementGuideRoutes.js";
+import govtNewsRoutes from "./routes/govtNewsRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import typeRoutes from "./routes/typeRoutes.js";
+import subCategoryRoutes from "./routes/subCategoryRoutes.js";
+import variantRoutes from "./routes/variantRoutes.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
+
+// chat related....
 import chatRoutes from "./routes/chatRoutes.js"; // add chat routes
 
+// Initialize Express app
 const PORT = process.env.PORT || 3001; // choose 3001 for chat server to avoid frontend port conflicts
 const app = express();
 
@@ -57,8 +70,18 @@ app.use("/fields", fieldsRoutes);
 app.use("/tasks", dailyToDoRoutes);
 app.use("/resources", resourceRoutes);
 app.use("/activities", activityRoutes);
+app.use("/govt-news", govtNewsRoutes);
+app.use("/blogs", blogRoutes);
 app.use("/crops", starNewCropRoutes);
 app.use("/api/guides", managementGuideRoutes);
+app.use("/categories", categoryRoutes);
+
+app.use("/types", typeRoutes);
+app.use("/subCategories", subCategoryRoutes);
+app.use("/variants", variantRoutes);
+
+app.use("/reviews", reviewRoutes);
+app.use("/wishlist", wishlistRoutes);
 
 // Create HTTP server and attach socket.io
 const server = http.createServer(app);
@@ -87,6 +110,18 @@ const startServer = async () => {
    } catch (err) {
       console.error("Failed to start server:", err);
       process.exit(1);
+   }
+
+   // Health check route
+   app.get("/", (req, res) => {
+      res.send("Root Farming Is Alive!");
+   });
+
+   // Only listen locally if not deployed on Vercel
+   if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+      app.listen(PORT, () => {
+         console.log(`Server running at http://localhost:${PORT}`);
+      });
    }
 };
 
