@@ -47,6 +47,7 @@ app.use(
    cors({
       origin: [
          "http://localhost:5173",
+         "http://localhost:5174",
          "https://elegant-buttercream-cd3400.netlify.app",
       ],
       credentials: true,
