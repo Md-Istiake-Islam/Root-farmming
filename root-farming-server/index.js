@@ -49,6 +49,7 @@ app.use(
       origin: [
          "http://localhost:5173",
          "http://localhost:5174",
+         "https://root-farming-quantum.netlify.app",
          "https://root-farming.web.app",
          "https://elegant-buttercream-cd3400.netlify.app",
          "https://root-farming-bb736.web.app",
@@ -96,6 +97,7 @@ const io = new Server(server, {
       origin: [
          "http://localhost:5173",
          "http://localhost:5174",
+         "https://root-farming-quantum.netlify.app",
          "https://elegant-buttercream-cd3400.netlify.app",
          "https://root-farming-bb736.web.app",
          "https://clinquant-conkies-e2c5aa.netlify.app",
