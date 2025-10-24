@@ -35,9 +35,6 @@ import farmerFieldsRoutes from "./routes/farmerFieldsRoutes.js";
 // chat related....
 import chatRoutes from "./routes/chatRoutes.js"; // add chat routes
 
-// Node modules
-import path from "path";
-
 // Initialize Express app
 const PORT = process.env.PORT || 3001; // choose 3001 for chat server to avoid frontend port conflicts
 const app = express();
@@ -55,6 +52,7 @@ app.use(
          "https://root-farming.web.app",
          "https://elegant-buttercream-cd3400.netlify.app",
          "https://root-farming-bb736.web.app",
+         "https://clinquant-conkies-e2c5aa.netlify.app/",
       ],
       credentials: true,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -82,21 +80,14 @@ app.use("/blogs", blogRoutes);
 app.use("/crops", starNewCropRoutes);
 app.use("/api/guides", managementGuideRoutes);
 app.use("/categories", categoryRoutes);
+
 app.use("/types", typeRoutes);
 app.use("/subCategories", subCategoryRoutes);
 app.use("/variants", variantRoutes);
+
 app.use("/reviews", reviewRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/farmerfields", farmerFieldsRoutes);
-
-// ==================== NEW: Serve React Frontend Build ====================
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "dist")));
-
-app.get("*", (req, res) => {
-   res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-// =======================================================================
 
 // Create HTTP server and attach socket.io
 const server = http.createServer(app);
@@ -105,9 +96,9 @@ const io = new Server(server, {
       origin: [
          "http://localhost:5173",
          "http://localhost:5174",
-         "https://root-farming.web.app",
          "https://elegant-buttercream-cd3400.netlify.app",
          "https://root-farming-bb736.web.app",
+         "https://clinquant-conkies-e2c5aa.netlify.app/",
       ],
       credentials: true,
       methods: ["GET", "POST"],
@@ -115,6 +106,7 @@ const io = new Server(server, {
 });
 
 // Use socket auth middleware (verify token on handshake)
+// verifySocketAuth must set socket.user = decodedToken and call next()
 io.use(verifySocketAuth);
 
 // Register socket event handlers (message, typing, markRead, etc.)
